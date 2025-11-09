@@ -19,7 +19,7 @@ Used CloudWatch for monitoring and tested via Postman.
 - Infrastructure deployed using **CloudFormation (YAML IAC)**  
 
 **Screenshots:**  
-![API Screenshot](screenshots/postman_get.png)
+![API Screenshot](Screenshots/postman_get.png)
 
 **Tech Stack:**  
 AWS Lambda | DynamoDB | API Gateway | CloudFormation | CloudWatch | Node.js
@@ -34,7 +34,7 @@ AWS Lambda | DynamoDB | API Gateway | CloudFormation | CloudWatch | Node.js
 Hosted a responsive portfolio website on S3 with CloudFront for CDN and Route53 for domain routing.
 
 **Screenshots:**  
-![S3 Hosting](screenshots/s3-deploy_site.png)
+![S3 Hosting](Screenshots/s3-deploy_site.png)
 
 **Tech Stack:**  
 S3 | CloudFront | Route53 | HTML | CSS
@@ -56,7 +56,7 @@ Implemented security group rules for HTTP/HTTPS and SSH access.
 - Managed server security via AWS **Security Groups**
 
 **Screenshots:**  
-![EC2 Deployment](screenshots/Ec2_server_side_site.png)
+![EC2 Deployment](Screenshots/Ec2_server_side_site.png)
 
 **Tech Stack:**  
 EC2 | Elastic IP | DuckDNS | Next.js | Nginx | Linux (Ubuntu)
@@ -88,6 +88,6 @@ Created DynamoDB tables (`Product`) using CloudFormation YAML template.
 ---
 
 ## 📬 Contact
-**LinkedIn:** [linkedin.com/in/hari-krish-13300b27a](https://www.linkedin.com/in/hari-krish-13300b27a/) 
- 
+**LinkedIn:** [linkedin.com/in/hari-krish-13300b27a](https://www.linkedin.com/in/hari-krish-13300b27a/)  
+
 **Email:** [harikrish58027@gmail.com](mailto:harikrish58027@gmail.com)

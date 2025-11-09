@@ -1,0 +1,161 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Serverless stack with Lambda + API Gateway + DynamoDB (Product Table)
+
+Resources:
+  ProductTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Product
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        SSEEnabled: true
+
+  ProductLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ProductLambdaRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaDynamoDBAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:Scan
+                Resource: !GetAtt ProductTable.Arn
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+  ProductLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: ProductLambda
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Role: !GetAtt ProductLambdaRole.Arn
+      Timeout: 10
+      MemorySize: 128
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ProductTable
+          REGION: eu-north-1
+      Code:
+        ZipFile: |
+          const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+          const { DynamoDBDocumentClient, PutCommand, ScanCommand } = require("@aws-sdk/lib-dynamodb");
+
+          const client = new DynamoDBClient({ region: process.env.REGION });
+          const ddbDocClient = DynamoDBDocumentClient.from(client);
+
+          exports.handler = async (event) => {
+            console.log("Incoming event:", JSON.stringify(event));
+
+            const tableName = process.env.TABLE_NAME;
+            const method = event.requestContext.http.method;
+
+            try {
+              if (method === "POST") {
+                const body = JSON.parse(event.body || "{}");
+                if (!body.id || !body.name) {
+                  return {
+                    statusCode: 400,
+                    body: JSON.stringify({ message: "id and name are required." }),
+                  };
+                }
+                const putParams = {
+                  TableName: tableName,
+                  Item: {
+                    id: body.id,
+                    name: body.name,
+                    createdAt: new Date().toISOString(),
+                  },
+                };
+                await ddbDocClient.send(new PutCommand(putParams));
+                return {
+                  statusCode: 201,
+                  body: JSON.stringify({ message: "Product added!", item: putParams.Item }),
+                };
+              }
+
+              if (method === "GET") {
+                const result = await ddbDocClient.send(new ScanCommand({ TableName: tableName }));
+                return {
+                  statusCode: 200,
+                  body: JSON.stringify(result.Items),
+                };
+              }
+
+              return {
+                statusCode: 405,
+                body: JSON.stringify({ message: "Method not allowed." }),
+              };
+            } catch (err) {
+              console.error("❌ Error:", err);
+              return {
+                statusCode: 500,
+                body: JSON.stringify({ message: "Internal error", error: err.message }),
+              };
+            }
+          };
+
+  ProductApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: ProductAPI
+      ProtocolType: HTTP
+
+  ProductLambdaIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref ProductApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ProductLambda.Arn}/invocations
+      PayloadFormatVersion: "2.0"
+
+  ProductApiRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref ProductApi
+      RouteKey: "ANY /product"
+      Target: !Sub integrations/${ProductLambdaIntegration}
+
+  ProductApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref ProductApi
+      StageName: "$default"
+      AutoDeploy: true
+
+  LambdaPermissionForApi:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ProductLambda
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ProductApi}/*/*/product
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ProductApi}.execute-api.${AWS::Region}.amazonaws.com/product"

@@ -1,7 +1,8 @@
 # 🚀 AWS Cloud Engineer Portfolio
 
 Hi, I'm **Hari** — an AWS Cloud Engineer with 2+ years of Flutter development experience.  
-I design **serverless architectures**, automate workflows using **IAC (CloudFormation)**, and build end-to-end solutions using **Lambda, API Gateway, and DynamoDB**.
+I design **serverless architectures**, automate workflows using **IAC (CloudFormation)**, and build end-to-end solutions using **Lambda, API Gateway, DynamoDB, EC2, S3, CloudFront (CDN), and CloudWatch**.
+
 
 ---
 

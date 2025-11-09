@@ -90,4 +90,5 @@ Created DynamoDB tables (`Product`) using CloudFormation YAML template.
 ## 📬 Contact
 **LinkedIn:** [linkedin.com/in/hari-krish-13300b27a](https://www.linkedin.com/in/hari-krish-13300b27a/)  
 
-**Email:** [harikrish58027@gmail.com](mailto:harikrish58027@gmail.com)
+**Email:** [harikrish58027@gmail.com](mailto:harikrish58027@gmail.com) | [Gmail Link](https://mail.google.com/mail/?view=cm&to=harikrish58027@gmail.com)
+

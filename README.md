@@ -49,8 +49,25 @@ S3 | CloudFront | Route53 | HTML | CSS | React
 Deployed a **Next.js portfolio website** on an **EC2 instance**, configured an **Elastic IP** for static addressing, and linked a **custom DuckDNS domain** for public access.  
 Implemented security group rules for HTTP/HTTPS and SSH access.
 
+
+**Code:**
+[View CloudFormation Template](iac/serverless.yaml)
+
+**Features:**
+
+**Screenshots:**  
+![EC2 Deployment](Screenshots/Ec2_server_side_site.png)
+
+**Tech Stack:**  
+EC2 | Elastic IP | DuckDNS | Next.js | Nginx | Linux (Ubuntu)
+
+**Demo:**  
+🔗 [http://krishportfolio.duckdns.org:3000](http://krishportfolio.duckdns.org:3000)
+
 ---
-#### 🏗️ Core Networking & Scaling (VPC, Subnets, Route Table, IGW, ALB, ASG, Target Groups)
+
+
+#### 4️⃣ Core Networking & Scaling (VPC, Subnets, Route Table, IGW, ALB, ASG, Target Groups)
 Provisioned secure and scalable AWS infrastructure using CloudFormation, including:
 - **VPC**: Custom Virtual Private Cloud for network isolation
 - **Subnets**: Public and private subnets for tiered architecture
@@ -74,22 +91,7 @@ VPC | Subnets | Route Table | IGW | EC2 | ALB | ASG | Target Groups | CloudForma
 ![IGW](Screenshots/IGW.png)
 
 
-**Code:**
-[View CloudFormation Template](iac/serverless.yaml)
-
-**Features:**
-
-**Screenshots:**  
-![EC2 Deployment](Screenshots/Ec2_server_side_site.png)
-
-**Tech Stack:**  
-EC2 | Elastic IP | DuckDNS | Next.js | Nginx | Linux (Ubuntu)
-
-**Demo:**  
-🔗 [http://krishportfolio.duckdns.org:3000](http://krishportfolio.duckdns.org:3000)
-
-
-### 4️⃣ Infrastructure as Code (DynamoDB Setup)
+### 5️⃣ Infrastructure as Code (DynamoDB Setup)
 **Description:**  
 Created DynamoDB tables (`Product`) using CloudFormation YAML template.
 

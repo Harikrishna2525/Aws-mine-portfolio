@@ -69,6 +69,11 @@ Provisioned secure and scalable AWS infrastructure using CloudFormation, includi
 **Tech Stack:**
 VPC | Subnets | Route Table | IGW | EC2 | ALB | ASG | Target Groups | CloudFormation
 
+**Screenshots:**  
+![VPC Screenshots](Screenshots\vpc.png)
+![IGW](Screenshots\IGW.png)
+
+
 **Code:**
 [View CloudFormation Template](iac/serverless.yaml)
 

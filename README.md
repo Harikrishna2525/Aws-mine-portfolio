@@ -70,8 +70,8 @@ Provisioned secure and scalable AWS infrastructure using CloudFormation, includi
 VPC | Subnets | Route Table | IGW | EC2 | ALB | ASG | Target Groups | CloudFormation
 
 **Screenshots:**  
-![VPC Screenshots](Screenshots\vpc.png)
-![IGW](Screenshots\IGW.png)
+![VPC Screenshots](Screenshots/vpc.png)
+![IGW](Screenshots/IGW.png)
 
 
 **Code:**

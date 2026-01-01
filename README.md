@@ -108,7 +108,7 @@ Created DynamoDB tables (`Product`) using CloudFormation YAML template.
 ---
 
 ## 🌐 Portfolio
-🔗 **Live Portfolio Site:** [https://harikrish-portfolio.web.app/](https://harikrish-portfolio.web.app/)
+🔗 **Live Portfolio Site:** [https://harikrish-portfolio25.web.app/](https://harikrish-portfolio25.web.app/)
 
 ---
 

@@ -30,7 +30,7 @@ AWS Lambda | DynamoDB | API Gateway | CloudFormation | CloudWatch | Node.js
 
 ---
 
-### 2️⃣ Static Website Hosting (S3 + CloudFront + Route53)
+### 2️⃣ Static Website Hosting (S3 + CloudFront)
 **Description:**  
 Hosted a responsive portfolio website on S3 with CloudFront for CDN and Route53 for domain routing.
 
